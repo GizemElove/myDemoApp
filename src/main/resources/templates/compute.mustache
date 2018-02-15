@@ -1,18 +1,147 @@
+
+<html>
+<head>
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+
+student {
+    float: left;
+    max-width: 260px;
+    margin: 0;
+    padding: 1em;
+}
+
+student ul {
+    list-style-type: none;
+    padding: 0;
+}
+   
+student ul a {
+    text-decoration: none;
+}
+
+student-list {
+    margin-left: 170px;
+   
+    overflow: hidden;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+</head>
+<body>
+
 <title>My application deployed automatically</title>
 
-  <h1>Hello, World!</h1>
-
-    Result is {{result}}
+<h1> BIL-481 Students Grades Calculater </h1>
 
 
-  <form action="compute" method="post">
+<student>
+  <ul>
+    <li>Student Name:<br><input type="text" id="student_name"></li>
+    <li>Midterm 1:<br><input type="text" id="middeterm1"></li>
+    <li>Midterm 2:<br><input type="text" id="middeterm2"></li>
+    <li>Final:<br><input type="text" id="final"></li>
+    <li><br><button type="button" onclick="addStudent()">Add Student</button><button type="button" onclick="postStudents()">Calculate Grades</button></li> 
+ 
+  </ul>
+</student>
 
-        <textarea name="input1" rows="10" cols="30"></textarea>
+<student-list>
+  <table id="student_list">
+  <tr>
+    <th>Student Name</th>
+    <th>Midterm 1</th>
+    <th>Midterm 2</th>
+    <th>Final</th>
+  </tr>
+  
+  
+</table>
 
-        <textarea name="input2" rows="10" cols="30"></textarea>
 
-        <br>
+</student-list>
 
-        <input type="submit">
+<script>
 
-  </form>
+	var namesStr = "";
+	var m1Str = "";
+	var m2Str = "";
+	var finalStr =""; 
+
+function addStudent() {
+	var name = document.getElementById("student_name").value;
+	namesStr = namesStr +"," + name;
+	var m1 = document.getElementById("middeterm1").value;
+	m1Str = m1Str +"," + m1;
+	var m2 = document.getElementById("middeterm2").value;
+	m2Str = m2Str +"," + m2;
+	var final = document.getElementById("final").value;
+	finalStr = finalStr +"," + final;
+	
+	var row = "<tr><td>"+name+"</td><td>"+m1+"</td><td>"+m2+"</td><td>"+final+"</td></tr>";
+    
+  
+	alert(namesStr);
+	alert(m1Str);
+	alert(m2Str);
+	alert(finalStr);
+	document.getElementById("student_list").innerHTML = document.getElementById("student_list").innerHTML + row;
+
+}
+
+function postStudents(){
+	var form = document.createElement("form");
+    	form.setAttribute("method", "post");
+    	form.setAttribute("action", "/calculategrades");
+
+        var names = document.createElement("input");
+	names.setAttribute("type", "hidden");
+	names.setAttribute("name", "names");
+	names.setAttribute("value", namesStr);
+	form.appendChild(names);
+
+	var mid1 = document.createElement("input");
+	mid1.setAttribute("type", "hidden");
+	mid1.setAttribute("name", "mid1");
+	mid1.setAttribute("value", m1Str);
+	form.appendChild(mid1);
+
+	var mid2 = document.createElement("input");
+	mid2.setAttribute("type", "hidden");
+	mid2.setAttribute("name", "mid2");
+	mid2.setAttribute("value", m2Str);
+	form.appendChild(mid2);
+
+	var finals = document.createElement("input");
+	finals.setAttribute("type", "hidden");
+	finals.setAttribute("name", "finals");
+	finals.setAttribute("value", finalStr);
+	form.appendChild(finals);
+    
+
+    document.body.appendChild(form);
+    form.submit();
+
+}
+</script>
+
+</body>
+</html>

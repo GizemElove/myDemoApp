@@ -1,27 +1,19 @@
 
 package com.mycompany.app;
-
 import static spark.Spark.get;
-
 import static spark.Spark.port;
-
 import static spark.Spark.post;
-
 import java.util.ArrayList;
-
 import java.util.HashMap;
-
 import java.util.Map;
-
 import spark.ModelAndView;
-
 import spark.template.mustache.MustacheTemplateEngine;
 
 public class App
 
 {
 
-    public static boolean search(ArrayList<Integer> array, int e) {
+    public static String ClassSuccess (ArrayList<Integer> studentName,ArrayList<Integer> midtermExam, ArrayList<Integer> finalExam, int midtermPercentage, int finalPercentage) {
 
       System.out.println("inside search");
 
