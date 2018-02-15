@@ -40,33 +40,48 @@ public class AppTest
     {
         assertTrue( true );
     }
-    public void testFound() {
 
-      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+    public void testInputSizeNotMatch() {
 
-      assertTrue(new App().search(array, 4));
-
-    }
-
-    public void testNotFound() {
-
-      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-
-      assertFalse(new App().search(array, 5));
+      assertEquals("error",new App().calculateGrades(new String[]{"ali"},new Integer[]{1,2},new Integer[]{1,2},new Integer[]{1,2}));
 
     }
 
-    public void testEmptyArray() {
+    public void testSuccess() {
 
-      ArrayList<Integer> array = new ArrayList<>();
-
-      assertFalse(new App().search(array, 1));
+     
+            assertEquals(",1.0 ,2.0 ",new App().calculateGrades(new String[]{"ali","veli"},new Integer[]{1,2},new Integer[]{1,2},new Integer[]{1,2}));
+   
 
     }
 
-    public void testNull() {
+    public void testEmptyInput() {
 
-      assertFalse(new App().search(null, 1));
+       assertEquals("",new App().calculateGrades(new String[]{},new Integer[]{},new Integer[]{},new Integer[]{}));
+
+    }
+
+    public void testMid1Null() {
+
+      assertEquals("names null",new App().calculateGrades(null,new Integer[]{1,2},new Integer[]{1,2},new Integer[]{1,2}));
+
+    }
+
+    public void testNameNull() {
+
+      assertEquals("mid1 null",new App().calculateGrades(new String[]{"ali","veli"},null,new Integer[]{1,2},new Integer[]{1,2}));
+
+    }
+
+    public void testMid2Null() {
+
+      assertEquals("mid2 null",new App().calculateGrades(new String[]{"ali","veli"},new Integer[]{1,2},null,new Integer[]{1,2}));
+
+    }
+
+    public void testFinalsNull() {
+
+      assertEquals("finals null",new App().calculateGrades(new String[]{"ali","veli"},new Integer[]{1,2},new Integer[]{1,2},null));
 
     }
 }

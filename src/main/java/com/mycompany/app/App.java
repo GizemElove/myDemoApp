@@ -15,6 +15,18 @@ public class App
 {
 
 public static String calculateGrades(String[] names,Integer[] mid1,Integer[] mid2,Integer[] finals){
+    if(names == null){
+      return "names null";
+    }
+    if(mid1 == null){
+      return "mid1 null";
+    }
+    if(mid2 == null){
+      return "mid2 null";
+    }
+    if(finals == null){
+      return "finals null";
+    }
 		if(names.length != mid1.length || names.length != mid2.length || names.length != finals.length){
 			return "error";
 		}
