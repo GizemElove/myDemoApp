@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
+
 import spark.template.mustache.MustacheTemplateEngine;
 
 public class App
 
 {
 
-    public static String ClassSuccess (ArrayList<Integer> studentName,ArrayList<Integer> midtermExam, ArrayList<Integer> finalExam, int midtermPercentage, int finalPercentage) {
+    public static boolean search(ArrayList<Integer> array, int e) {
 
       System.out.println("inside search");
 
