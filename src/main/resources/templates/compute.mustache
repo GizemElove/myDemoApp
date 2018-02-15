@@ -78,15 +78,40 @@ tr:nth-child(even) {
 
 
 </student-list>
+<student-list>
+ <table id="result_list">
+  <tr>
+    <th>Student Name</th>
+    <th>Grades</th>
+  </tr>
+  
+ 
+</table>
+</student-list>
 
 <script>
+  var x =  '{{grades}}';
+  var y = '{{names}}';
+  if(x != '' ) {
+      var grades = x.split(",");
+      var names = y.split(",");
+      var row = '';
+      for (i = 0; i < grades.length; i++) {
+          if(names[i] != ''){
+              row = row + "<tr><td>"+names[i]+"</td><td>"+grades[i]+"</td></tr>";
+          }
+      } 
+      document.getElementById("result_list").innerHTML = document.getElementById("result_list").innerHTML + row;
+  }
 
+  
 	var namesStr = "";
 	var m1Str = "";
 	var m2Str = "";
 	var finalStr =""; 
 
 function addStudent() {
+ 
 	var name = document.getElementById("student_name").value;
 	namesStr = namesStr +"," + name;
 	var m1 = document.getElementById("middeterm1").value;
@@ -99,10 +124,7 @@ function addStudent() {
 	var row = "<tr><td>"+name+"</td><td>"+m1+"</td><td>"+m2+"</td><td>"+final+"</td></tr>";
     
   
-	alert(namesStr);
-	alert(m1Str);
-	alert(m2Str);
-	alert(finalStr);
+
 	document.getElementById("student_list").innerHTML = document.getElementById("student_list").innerHTML + row;
 
 }
@@ -110,7 +132,7 @@ function addStudent() {
 function postStudents(){
 	var form = document.createElement("form");
     	form.setAttribute("method", "post");
-    	form.setAttribute("action", "/calculategrades");
+    	form.setAttribute("action", "/compute");
 
         var names = document.createElement("input");
 	names.setAttribute("type", "hidden");

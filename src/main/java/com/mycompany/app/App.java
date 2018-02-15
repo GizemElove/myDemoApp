@@ -14,6 +14,23 @@ public class App
 
 {
 
+public static String calculateGrades(String[] names,Integer[] mid1,Integer[] mid2,Integer[] finals){
+		if(names.length != mid1.length || names.length != mid2.length || names.length != finals.length){
+			return "error";
+		}
+    String result = "";
+		for(int i= 0 ; i < names.length ; i++)
+		{
+      if(names[i] == ""){
+        continue;
+      }
+      if(!names[i].equals("")){
+				result =   result + "," + (0.4 * finals[i] + 0.3 * mid1[i] + 0.3 * mid2[i]) +" ";
+		}
+    }
+		
+		return result;
+	}
     public static boolean search(ArrayList<Integer> array, int e) {
 
       System.out.println("inside search");
@@ -38,40 +55,52 @@ public class App
 
         post("/compute", (req, res) -> {
 
-          //System.out.println(req.queryParams("input1"));
 
-          //System.out.println(req.queryParams("input2"));
+          String namesStr = req.queryParams("names");
+          String mid1Str = req.queryParams("mid1");
+          String mid2Str = req.queryParams("mid2");
+          String finalsStr = req.queryParams("finals");
 
-          String input1 = req.queryParams("input1");
+         String[] nameArr = namesStr.split(",");
+         int size = nameArr.length;
+         String[] temp = mid1Str.split(",");
 
-          java.util.Scanner sc1 = new java.util.Scanner(input1);
+         Integer[] mid1Arr = new Integer[size];
+         for(int i = 0 ; i < size ; i++){
+           if(temp[i].equals("")){
+             mid1Arr[i] = 0;
+           }else{
+             mid1Arr[i] = Integer.parseInt(temp[i]);
+           }
+         }
 
-          sc1.useDelimiter("[;\r\n]+");
+         temp = mid2Str.split(",");
 
-          java.util.ArrayList<Integer> inputList = new java.util.ArrayList<>();
+         Integer[] mid2Arr = new Integer[size];
+         for(int i = 0 ; i < size ; i++){
+          if(temp[i].equals("")){
+             mid2Arr[i] = 0;
+           }else{
+             mid2Arr[i] = Integer.parseInt(temp[i]);
+           }
+         }
 
-          while (sc1.hasNext())
+        temp = finalsStr.split(",");
 
-          {
+         Integer[] finalsArr = new Integer[size];
+         for(int i = 0 ; i < size ; i++){
+           if(temp[i].equals("")){
+             finalsArr[i] = 0;
+           }else{
+             finalsArr[i] = Integer.parseInt(temp[i]);
+           }
+         }
 
-            int value = Integer.parseInt(sc1.next().replaceAll("\\s",""));
-
-            inputList.add(value);
-
-          }
-
-          System.out.println(inputList);
-
-
-          String input2 = req.queryParams("input2").replaceAll("\\s","");
-
-          int input2AsInt = Integer.parseInt(input2);
-
-          boolean result = App.search(inputList, input2AsInt);
-
+         
          Map map = new HashMap();
 
-          map.put("result", result);
+          map.put("grades", calculateGrades(nameArr,mid1Arr,mid2Arr,finalsArr));
+          map.put("names", namesStr);
 
           return new ModelAndView(map, "compute.mustache");
 
@@ -84,7 +113,8 @@ public class App
 
               Map map = new HashMap();
 
-              map.put("result", "not computed yet!");
+              map.put("grades", "");
+             map.put("names",  "");
 
               return new ModelAndView(map, "compute.mustache");
 
